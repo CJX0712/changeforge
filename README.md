@@ -188,7 +188,12 @@ changeforge/                 # 仓库根
 - [x] Optuna 调参基建与 CLI
 - [x] 算法模块接入（12 个检测器 + ConStab-CPD 旗舰，纯 numpy 离线兜底 + ruptures 后端）
 - [x] 基准数据集与真实性能数字（quick 冒烟，见上）
-- [ ] 结果可视化
+- [x] 结果可视化（[docs/benchmark_report.html](docs/benchmark_report.html)，单文件零依赖，一键再生成）
+
+```bash
+python examples/run_demo.py --quick      # 跑基准，落盘 artifacts/benchmark.json
+python scripts/make_report.py            # 读真实 json 生成 docs/benchmark_report.html
+```
 
 ## 许可证
 

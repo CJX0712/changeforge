@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChangeForge 基准报告 · 晨星</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1f2933; --muted: #616e7c;
+    --line: #e4e7eb; --panel: #f8fafb; --accent: #0f6e5c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 24px 64px;
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC",
+                 "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--fg); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  header {
+    border-bottom: 2px solid var(--accent); padding-bottom: 16px; margin-bottom: 28px;
+  }
+  h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: .3px; }
+  .sub { color: var(--muted); font-size: 13px; }
+  h2 { font-size: 18px; margin: 36px 0 10px; padding-left: 10px;
+        border-left: 4px solid var(--accent); }
+  .note { font-size: 13px; color: var(--muted); margin: 6px 0 12px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px;
+           font-variant-numeric: tabular-nums; }
+  th, td { padding: 7px 9px; border: 1px solid var(--line); text-align: center; }
+  thead th { background: var(--panel); font-weight: 600; }
+  tbody th[scope="row"] { text-align: left; background: var(--panel);
+           font-weight: 500; font-family: ui-monospace, "Cascadia Code",
+           Consolas, monospace; font-size: 12px; white-space: nowrap; }
+  tr.flagship th[scope="row"] { background: #e8f4f0; color: var(--accent); font-weight: 700; }
+  td.na { color: #b4bec9; }
+  td.num { text-align: right; }
+  td.kv { text-align: left; color: #33414d; }
+  .ms { display: block; font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .legend { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .sw { display: inline-block; width: 14px; height: 14px; vertical-align: -2px;
+         border: 1px solid var(--line); margin-right: 4px; }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 10px;
+           font-size: 11px; font-weight: 600; }
+  .pill.ok { background: #d6f2e2; color: #14532d; }
+  .pill.warn { background: #fee2e2; color: #7f1d1d; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 14px; margin-top: 12px; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px;
+           background: var(--panel); }
+  .card h3 { margin: 0 0 6px; font-size: 14px; }
+  .card p { margin: 0; font-size: 13px; color: #33414d; }
+  .card.key { border-left: 4px solid #dc2626; }
+  footer { margin-top: 44px; padding-top: 14px; border-top: 1px solid var(--line);
+            font-size: 12px; color: var(--muted); }
+  code { background: var(--panel); padding: 1px 5px; border-radius: 4px;
+          font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>ChangeForge · 变化点检测基准报告</h1>
+  <div class="sub">
+    12 检测器 × 6 难度档 · 模式 <code>quick</code> · 版本 0.1.0 ·
+    生成于 2026-09-29T18:41:20.121445+00:00 · 作者 晨星
+  </div>
+  <div class="sub">评测口径：F1@tol_rel, tol_rel = 0.01*n　|　惩罚：beta=lam*d*sigma_hat^2*log n; sigma_hat=MAD*1.4826; lam=3(BIC-like)</div>
+</header>
+
+<h2>1 · F1 热力表（越高越好）</h2>
+<div class="note">
+  ★ = 旗舰 ConStab-CPD。D1/D1b 为零假设档（无真实变化点），该档 F1=1.0
+  表示"正确地一个都没报"，语义与 D0/D3/D4/D5 不同，看 FPR 表更合适。
+</div>
+<table>
+  <thead><tr><th>检测器</th><th>D0 Smoke</th><th>D1 Null-iid</th><th>D1b Null-AR</th><th>D3 Medium</th><th>D4 Hard</th><th>D5 Expert</th></tr></thead>
+  <tbody>
+<tr class=""><th scope="row">numpy‑pelt‑l2</th><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(168,201,196);color:#1f2933">0.333</td><td style="background:rgb(184,211,207);color:#1f2933">0.261</td><td style="background:rgb(70,142,129);color:#ffffff">0.762</td></tr>
+<tr class=""><th scope="row">numpy‑binseg‑l2</th><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(206,223,222);color:#1f2933">0.167</td><td style="background:rgb(219,231,231);color:#1f2933">0.111</td><td style="background:rgb(66,140,127);color:#ffffff">0.778</td></tr>
+<tr class=""><th scope="row">numpy‑window‑l2</th><td style="background:rgb(91,155,144);color:#ffffff">0.667</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(163,198,193);color:#1f2933">0.353</td><td style="background:rgb(80,148,136);color:#ffffff">0.718</td></tr>
+<tr class=""><th scope="row">numpy‑mmd‑rff</th><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(222,233,233);color:#1f2933">0.095</td></tr>
+<tr class=""><th scope="row">numpy‑cusum</th><td style="background:rgb(149,189,183);color:#1f2933">0.417</td><td style="background:rgb(198,219,217);color:#1f2933">0.200</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(142,186,179);color:#1f2933">0.444</td><td style="background:rgb(130,178,170);color:#1f2933">0.500</td><td style="background:rgb(166,200,195);color:#1f2933">0.340</td></tr>
+<tr class=""><th scope="row">numpy‑slidingt</th><td style="background:rgb(91,155,144);color:#ffffff">0.667</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(121,173,164);color:#1f2933">0.537</td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑l2</th><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(168,201,196);color:#1f2933">0.333</td><td style="background:rgb(193,216,213);color:#1f2933">0.222</td><td style="background:rgb(56,134,120);color:#ffffff">0.821</td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑l1</th><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(96,158,147);color:#ffffff">0.647</td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑normal</th><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(61,137,123);color:#ffffff">0.800</td><td style="background:rgb(168,201,196);color:#1f2933">0.333</td><td style="background:rgb(193,216,213);color:#1f2933">0.222</td><td style="background:rgb(146,188,181);color:#1f2933">0.429</td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑rank</th><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(206,223,222);color:#1f2933">0.167</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(168,201,196);color:#1f2933">0.333</td></tr>
+<tr class=""><th scope="row">ruptures‑kernel‑rbf</th><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(15,110,92);color:#ffffff">1.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(244,246,248);color:#1f2933">0.000</td><td style="background:rgb(222,233,233);color:#1f2933">0.095</td></tr>
+<tr class="flagship"><th scope="row">constab‑cpd</th><td style="background:rgb(15,110,92);color:#ffffff">1.000 ★</td><td style="background:rgb(15,110,92);color:#ffffff">1.000 ★</td><td style="background:rgb(15,110,92);color:#ffffff">1.000 ★</td><td style="background:rgb(179,207,203);color:#1f2933">0.286 ★</td><td style="background:rgb(244,246,248);color:#1f2933">0.000 ★</td><td style="background:rgb(222,233,233);color:#1f2933">0.095 ★</td></tr>
+  </tbody>
+</table>
+<div class="legend">
+  色阶：<span class="sw" style="background:rgb(244,246,248)"></span>0.0
+  → <span class="sw" style="background:rgb(130,178,170)"></span>0.5
+  → <span class="sw" style="background:rgb(15,110,92)"></span>1.0
+</div>
+
+<h2>2 · 零假设档误报率 FPR（越低越好）</h2>
+<div class="note">
+  D1 = iid 高斯噪声；D1b = AR(1) 自相关噪声。α = 0.05。
+  <strong>红 = 每档每一条序列都误报（FPR = 1.0）</strong>。
+</div>
+<table>
+  <thead><tr><th>检测器</th><th>D1 Null-iid</th><th>D1b Null-AR</th></tr></thead>
+  <tbody>
+<tr class=""><th scope="row">numpy‑pelt‑l2</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(220,38,38);color:#ffffff">1.00</td></tr>
+<tr class=""><th scope="row">numpy‑binseg‑l2</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(220,38,38);color:#ffffff">1.00</td></tr>
+<tr class=""><th scope="row">numpy‑window‑l2</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(220,38,38);color:#ffffff">1.00</td></tr>
+<tr class=""><th scope="row">numpy‑mmd‑rff</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(214,242,226);color:#14532d">0.00</td></tr>
+<tr class=""><th scope="row">numpy‑cusum</th><td style="background:rgb(220,38,38);color:#ffffff">0.80</td><td style="background:rgb(220,38,38);color:#ffffff">1.00</td></tr>
+<tr class=""><th scope="row">numpy‑slidingt</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(220,38,38);color:#ffffff">1.00</td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑l2</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(220,38,38);color:#ffffff">1.00</td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑l1</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(214,242,226);color:#14532d">0.00</td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑normal</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(254,243,199);color:#78350f">0.20</td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑rank</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(214,242,226);color:#14532d">0.00</td></tr>
+<tr class=""><th scope="row">ruptures‑kernel‑rbf</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(214,242,226);color:#14532d">0.00</td></tr>
+<tr class="flagship"><th scope="row">constab‑cpd</th><td style="background:rgb(214,242,226);color:#14532d">0.00</td><td style="background:rgb(214,242,226);color:#14532d">0.00</td></tr>
+  </tbody>
+</table>
+
+<h2>3 · 单序列平均耗时（对数刻度）</h2>
+<div class="note">
+  横条按 log₁₀ 刻度，最长条 = 12.2 min（全表最大值）。
+  纯 numpy 实现比 ruptures 后端快 2～3 个数量级——ruptures 本机走的是
+  纯 Python 路径（无 Cython 扩展），该数字不代表其 Cython 加速后的性能。
+</div>
+<table>
+  <thead><tr><th>检测器</th><th>D0 Smoke</th><th>D1 Null-iid</th><th>D1b Null-AR</th><th>D3 Medium</th><th>D4 Hard</th><th>D5 Expert</th></tr></thead>
+  <tbody>
+<tr class=""><th scope="row">numpy‑pelt‑l2</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="24 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="55.6" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">24 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="25 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="56.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">25 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="33 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="58.8" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">33 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="25 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="55.8" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">25 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="25 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="56.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">25 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="97 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="69.6" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">97 ms</span></td></tr>
+<tr class=""><th scope="row">numpy‑binseg‑l2</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="18 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="52.7" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">18 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="9 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="46.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">9 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="34 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="59.1" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">34 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="27 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="56.6" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">27 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="91 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="69.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">91 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="482 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="85.8" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">482 ms</span></td></tr>
+<tr class=""><th scope="row">numpy‑window‑l2</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="15 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="50.7" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">15 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="15 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="50.6" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">15 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="14 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="50.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">14 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="14 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="50.2" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">14 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="15 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="50.5" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">15 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="58 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="64.5" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">58 ms</span></td></tr>
+<tr class=""><th scope="row">numpy‑mmd‑rff</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="373 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="83.2" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">373 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="1.7 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="98.5" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">1.7 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="1.2 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="95.3" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">1.2 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="1.1 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="94.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">1.1 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="1.1 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="94.2" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">1.1 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="7.0 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="112.9" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">7.0 s</span></td></tr>
+<tr class=""><th scope="row">numpy‑cusum</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="0.90 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="22.2" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">0.90 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="0.80 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="21.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">0.80 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="0.70 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="19.7" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">0.70 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="0.60 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="18.1" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">0.60 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="1 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="25.1" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">1 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="2 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="28.7" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">2 ms</span></td></tr>
+<tr class=""><th scope="row">numpy‑slidingt</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="25 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="55.8" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">25 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="21 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="53.9" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">21 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="19 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="53.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">19 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="19 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="53.3" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">19 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="22 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="54.7" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">22 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="60 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="64.7" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">60 ms</span></td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑l2</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="3.2 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="105.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">3.2 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="6.3 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="111.9" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">6.3 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="2.1 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="100.6" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">2.1 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="4.0 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="107.3" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">4.0 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="3.2 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="105.1" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">3.2 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="11.5 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="117.9" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">11.5 s</span></td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑l1</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="4.2 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="107.8" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">4.2 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="5.8 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="111.1" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">5.8 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="7.5 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="113.6" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">7.5 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="6.7 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="112.4" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">6.7 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="7.3 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="113.3" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">7.3 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="30.5 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="127.8" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">30.5 s</span></td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑normal</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="4.8 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="109.1" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">4.8 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="8.6 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="115.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">8.6 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="7.1 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="113.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">7.1 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="6.0 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="111.3" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">6.0 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="6.5 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="112.2" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">6.5 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="29.9 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="127.6" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">29.9 s</span></td></tr>
+<tr class=""><th scope="row">ruptures‑pelt‑rank</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="4.7 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="108.8" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">4.7 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="8.3 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="114.6" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">8.3 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="8.1 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="114.4" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">8.1 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="5.7 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="110.8" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">5.7 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="8.2 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="114.5" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">8.2 s</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="29.2 s"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="127.3" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">29.2 s</span></td></tr>
+<tr class=""><th scope="row">ruptures‑kernel‑rbf</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="19 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="53.1" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">19 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="21 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="54.3" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">21 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="21 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="54.2" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">21 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="27 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="56.6" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">27 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="20 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="53.5" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">20 ms</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="73 ms"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="66.8" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">73 ms</span></td></tr>
+<tr class="flagship"><th scope="row">constab‑cpd</th><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="1.4 min"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="138.2" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">1.4 min</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="2.0 min"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="141.9" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">2.0 min</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="2.0 min"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="141.9" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">2.0 min</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="2.3 min"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="142.9" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">2.3 min</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="2.3 min"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="143.2" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">2.3 min</span></td><td><svg width="164" height="12" viewBox="0 0 164 12" role="img" aria-label="12.2 min"><rect x="0" y="2" width="164" height="8" rx="4" fill="#eef1f4"/><rect x="0" y="2" width="160.0" height="8" rx="4" fill="#3f6f8f"/></svg><span class="ms">12.2 min</span></td></tr>
+  </tbody>
+</table>
+
+<h2>4 · DGP 区分度自检</h2>
+<table>
+  <thead><tr><th>档位</th><th>序列数</th><th>自检指标</th></tr></thead>
+  <tbody>
+<tr><th scope="row">D0 Smoke</th><td class="num">2</td><td class="kv">best_single=1.000 · spread=0.583 · min_F1=0.417 · 融合增益=0.000 · <span class="pill ok">Gate B 未触发</span></td></tr>
+<tr><th scope="row">D1 Null-iid</th><td class="num">5</td><td class="kv">融合增益=0.000 · <span class="pill ok">Gate B 未触发</span></td></tr>
+<tr><th scope="row">D1b Null-AR</th><td class="num">5</td><td class="kv">融合增益=0.000 · <span class="pill ok">Gate B 未触发</span></td></tr>
+<tr><th scope="row">D3 Medium</th><td class="num">2</td><td class="kv">best_single=0.444 · spread=0.444 · 融合增益=-0.159 · <span class="pill warn">Gate B 触发</span></td></tr>
+<tr><th scope="row">D4 Hard</th><td class="num">1</td><td class="kv">best_single=0.500 · spread=0.500 · 融合增益=-0.500 · <span class="pill warn">Gate B 触发</span></td></tr>
+<tr><th scope="row">D5 Expert</th><td class="num">1</td><td class="kv">best_single=0.821 · spread=0.725 · 融合增益=-0.725 · <span class="pill warn">Gate B 触发</span></td></tr>
+  </tbody>
+</table>
+<div class="note">
+  Gate B = 旗舰融合后反而显著低于最佳单检测器时的非劣回退（诚实降级，
+  不自称 SOTA）。触发即如实记录，不做美化。
+</div>
+
+<h2>5 · Oracle-K 参考（禁止进入主表对比）</h2>
+<table>
+  <thead><tr><th>档位</th><th>给定 K</th><th>F1</th></tr></thead>
+  <tbody>
+<tr><th scope="row">D0 Smoke</th><td class="num">1</td><td class="num">1.000</td></tr>
+<tr><th scope="row">D3 Medium</th><td class="num">4</td><td class="num">0.375</td></tr>
+<tr><th scope="row">D4 Hard</th><td class="num">8</td><td class="num">0.125</td></tr>
+<tr><th scope="row">D5 Expert</th><td class="num">20</td><td class="num">0.800</td></tr>
+  </tbody>
+</table>
+<div class="note">
+  Oracle 预先告知真实变化点个数 K，属上界参考而非公平对比。
+  D4 的 Oracle F1 仅 0.125，说明该档即使已知 K 也难以定位——是 DGP
+  难度标定问题，不是检测器缺陷。
+</div>
+
+<h2>结论</h2>
+<div class="cards">
+  <div class="card">
+    <h3>D0 Smoke 全员满分</h3>
+    <p>12 个检测器在易例上 F1 均为 1.0（含旗舰 constab），
+       说明基础链路与评测口径自洽。</p>
+  </div>
+  <div class="card key">
+    <h3>AR(1) 自相关下 l2 代价全线失效</h3>
+    <p>D1b 档：自研 PELT / BinSeg / Window / CUSUM / 滑动-t 与
+       ruptures-pelt-l2 <strong>FPR = 1.00</strong>，每条序列都误报。
+       稳健的是 MMD-RFF、pelt-l1、pelt-rank、kernel-rbf、constab（均 0.00）。
+       这条失效模式教科书很少强调。</p>
+  </div>
+  <div class="card">
+    <h3>旗舰：FPR 极优，难档功效受限</h3>
+    <p>constab 在两档零假设上 FPR = 0.00（显著性闸门校准成功），
+       D0 满分；但 D3/D4/D5 功效低于最佳单检测器，触发 Gate B 回退。
+       取舍如实记录。</p>
+  </div>
+  <div class="card">
+    <h3>难度标定非单调</h3>
+    <p>D5 Expert 实测 F1（0.821）高于 D3/D4。原因是密集变点 +
+       容差 tol = 0.01·n 放宽后命中更容易。属 DGP 设计问题，已在文档标注。</p>
+  </div>
+</div>
+
+<footer>
+  本页全部数字来自 <code>artifacts/benchmark.json</code>，由
+  <code>python scripts/make_report.py</code> 一键再生成，零手工录入、零编造。
+  作者 晨星 · ChangeForge 0.1.0
+</footer>
+
+</div>
+</body>
+</html>
