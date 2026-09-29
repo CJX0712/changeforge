@@ -78,9 +78,9 @@
     "tier": "D5",
     "n_series": 1,
     "checks": {
-      "best_single": 0.8205,
-      "spread": 0.7253,
-      "fused_gain_vs_best_single": -0.7253,
+      "best_single": 0.6857,
+      "spread": 0.5905,
+      "fused_gain_vs_best_single": -0.5905,
       "gate_b_fallback": true
     }
   }

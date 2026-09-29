@@ -1,0 +1,281 @@
+{
+  "generated_at": "2026-09-30T03:45:41+0800",
+  "author": "晨星",
+  "n_series_per_tier": 20,
+  "tol_fixed": 10,
+  "detectors": [
+    "numpy-pelt-l2",
+    "numpy-binseg-l2",
+    "numpy-window-l2",
+    "numpy-cusum",
+    "numpy-slidingt",
+    "ruptures-kernel-rbf"
+  ],
+  "elapsed_s": 22.6,
+  "tiers": {
+    "D0": {
+      "tier": "D0",
+      "n": 1000,
+      "k": 1,
+      "n_series": 20,
+      "detectors": {
+        "numpy-pelt-l2": {
+          "f1_tol_rel_mean": 1.0,
+          "f1_tol_rel_std": 0.0,
+          "f1_tol_fixed_mean": 1.0,
+          "f1_tol_fixed_std": 0.0,
+          "f1_tol_norm_mean": 1.0,
+          "f1_tol_norm_std": 0.0
+        },
+        "numpy-binseg-l2": {
+          "f1_tol_rel_mean": 1.0,
+          "f1_tol_rel_std": 0.0,
+          "f1_tol_fixed_mean": 1.0,
+          "f1_tol_fixed_std": 0.0,
+          "f1_tol_norm_mean": 1.0,
+          "f1_tol_norm_std": 0.0
+        },
+        "numpy-window-l2": {
+          "f1_tol_rel_mean": 0.7917,
+          "f1_tol_rel_std": 0.1963,
+          "f1_tol_fixed_mean": 0.7917,
+          "f1_tol_fixed_std": 0.1963,
+          "f1_tol_norm_mean": 0.7917,
+          "f1_tol_norm_std": 0.1963
+        },
+        "numpy-cusum": {
+          "f1_tol_rel_mean": 0.329,
+          "f1_tol_rel_std": 0.0957,
+          "f1_tol_fixed_mean": 0.329,
+          "f1_tol_fixed_std": 0.0957,
+          "f1_tol_norm_mean": 0.329,
+          "f1_tol_norm_std": 0.0957
+        },
+        "numpy-slidingt": {
+          "f1_tol_rel_mean": 0.6083,
+          "f1_tol_rel_std": 0.121,
+          "f1_tol_fixed_mean": 0.6083,
+          "f1_tol_fixed_std": 0.121,
+          "f1_tol_norm_mean": 0.6083,
+          "f1_tol_norm_std": 0.121
+        },
+        "ruptures-kernel-rbf": {
+          "f1_tol_rel_mean": 1.0,
+          "f1_tol_rel_std": 0.0,
+          "f1_tol_fixed_mean": 1.0,
+          "f1_tol_fixed_std": 0.0,
+          "f1_tol_norm_mean": 1.0,
+          "f1_tol_norm_std": 0.0
+        }
+      },
+      "mean_seg_len": 500.0,
+      "tol_rel": 10,
+      "tol_fixed": 10,
+      "tol_norm": 50,
+      "tol_norm_over_seg": 0.1,
+      "tol_rel_over_seg": 0.02,
+      "tol_fixed_over_seg": 0.02,
+      "macro_tol_rel": 0.7882,
+      "macro_tol_fixed": 0.7882,
+      "macro_tol_norm": 0.7882
+    },
+    "D3": {
+      "tier": "D3",
+      "n": 1000,
+      "k": 4,
+      "n_series": 20,
+      "detectors": {
+        "numpy-pelt-l2": {
+          "f1_tol_rel_mean": 0.3,
+          "f1_tol_rel_std": 0.2333,
+          "f1_tol_fixed_mean": 0.3,
+          "f1_tol_fixed_std": 0.2333,
+          "f1_tol_norm_mean": 0.3867,
+          "f1_tol_norm_std": 0.2177
+        },
+        "numpy-binseg-l2": {
+          "f1_tol_rel_mean": 0.2333,
+          "f1_tol_rel_std": 0.2134,
+          "f1_tol_fixed_mean": 0.2333,
+          "f1_tol_fixed_std": 0.2134,
+          "f1_tol_norm_mean": 0.3233,
+          "f1_tol_norm_std": 0.1981
+        },
+        "numpy-window-l2": {
+          "f1_tol_rel_mean": 0.0,
+          "f1_tol_rel_std": 0.0,
+          "f1_tol_fixed_mean": 0.0,
+          "f1_tol_fixed_std": 0.0,
+          "f1_tol_norm_mean": 0.0,
+          "f1_tol_norm_std": 0.0
+        },
+        "numpy-cusum": {
+          "f1_tol_rel_mean": 0.1353,
+          "f1_tol_rel_std": 0.1828,
+          "f1_tol_fixed_mean": 0.1353,
+          "f1_tol_fixed_std": 0.1828,
+          "f1_tol_norm_mean": 0.2135,
+          "f1_tol_norm_std": 0.2076
+        },
+        "numpy-slidingt": {
+          "f1_tol_rel_mean": 0.0,
+          "f1_tol_rel_std": 0.0,
+          "f1_tol_fixed_mean": 0.0,
+          "f1_tol_fixed_std": 0.0,
+          "f1_tol_norm_mean": 0.0,
+          "f1_tol_norm_std": 0.0
+        },
+        "ruptures-kernel-rbf": {
+          "f1_tol_rel_mean": 0.12,
+          "f1_tol_rel_std": 0.1833,
+          "f1_tol_fixed_mean": 0.12,
+          "f1_tol_fixed_std": 0.1833,
+          "f1_tol_norm_mean": 0.22,
+          "f1_tol_norm_std": 0.199
+        }
+      },
+      "mean_seg_len": 200.0,
+      "tol_rel": 10,
+      "tol_fixed": 10,
+      "tol_norm": 20,
+      "tol_norm_over_seg": 0.1,
+      "tol_rel_over_seg": 0.05,
+      "tol_fixed_over_seg": 0.05,
+      "macro_tol_rel": 0.1314,
+      "macro_tol_fixed": 0.1314,
+      "macro_tol_norm": 0.1906
+    },
+    "D4": {
+      "tier": "D4",
+      "n": 1000,
+      "k": 8,
+      "n_series": 20,
+      "detectors": {
+        "numpy-pelt-l2": {
+          "f1_tol_rel_mean": 0.2315,
+          "f1_tol_rel_std": 0.107,
+          "f1_tol_fixed_mean": 0.2315,
+          "f1_tol_fixed_std": 0.107,
+          "f1_tol_norm_mean": 0.2448,
+          "f1_tol_norm_std": 0.1021
+        },
+        "numpy-binseg-l2": {
+          "f1_tol_rel_mean": 0.0896,
+          "f1_tol_rel_std": 0.1004,
+          "f1_tol_fixed_mean": 0.0896,
+          "f1_tol_fixed_std": 0.1004,
+          "f1_tol_norm_mean": 0.1007,
+          "f1_tol_norm_std": 0.1022
+        },
+        "numpy-window-l2": {
+          "f1_tol_rel_mean": 0.1337,
+          "f1_tol_rel_std": 0.1354,
+          "f1_tol_fixed_mean": 0.1337,
+          "f1_tol_fixed_std": 0.1354,
+          "f1_tol_norm_mean": 0.1337,
+          "f1_tol_norm_std": 0.1354
+        },
+        "numpy-cusum": {
+          "f1_tol_rel_mean": 0.283,
+          "f1_tol_rel_std": 0.1104,
+          "f1_tol_fixed_mean": 0.283,
+          "f1_tol_fixed_std": 0.1104,
+          "f1_tol_norm_mean": 0.3064,
+          "f1_tol_norm_std": 0.1147
+        },
+        "numpy-slidingt": {
+          "f1_tol_rel_mean": 0.0,
+          "f1_tol_rel_std": 0.0,
+          "f1_tol_fixed_mean": 0.0,
+          "f1_tol_fixed_std": 0.0,
+          "f1_tol_norm_mean": 0.0,
+          "f1_tol_norm_std": 0.0
+        },
+        "ruptures-kernel-rbf": {
+          "f1_tol_rel_mean": 0.0,
+          "f1_tol_rel_std": 0.0,
+          "f1_tol_fixed_mean": 0.0,
+          "f1_tol_fixed_std": 0.0,
+          "f1_tol_norm_mean": 0.0,
+          "f1_tol_norm_std": 0.0
+        }
+      },
+      "mean_seg_len": 111.1,
+      "tol_rel": 10,
+      "tol_fixed": 10,
+      "tol_norm": 11,
+      "tol_norm_over_seg": 0.099,
+      "tol_rel_over_seg": 0.09,
+      "tol_fixed_over_seg": 0.09,
+      "macro_tol_rel": 0.123,
+      "macro_tol_fixed": 0.123,
+      "macro_tol_norm": 0.1309
+    },
+    "D5": {
+      "tier": "D5",
+      "n": 2000,
+      "k": 20,
+      "n_series": 20,
+      "detectors": {
+        "numpy-pelt-l2": {
+          "f1_tol_rel_mean": 0.559,
+          "f1_tol_rel_std": 0.1074,
+          "f1_tol_fixed_mean": 0.5366,
+          "f1_tol_fixed_std": 0.1117,
+          "f1_tol_norm_mean": 0.5366,
+          "f1_tol_norm_std": 0.1117
+        },
+        "numpy-binseg-l2": {
+          "f1_tol_rel_mean": 0.5404,
+          "f1_tol_rel_std": 0.1424,
+          "f1_tol_fixed_mean": 0.5245,
+          "f1_tol_fixed_std": 0.1389,
+          "f1_tol_norm_mean": 0.5245,
+          "f1_tol_norm_std": 0.1389
+        },
+        "numpy-window-l2": {
+          "f1_tol_rel_mean": 0.5805,
+          "f1_tol_rel_std": 0.1474,
+          "f1_tol_fixed_mean": 0.5323,
+          "f1_tol_fixed_std": 0.151,
+          "f1_tol_norm_mean": 0.5323,
+          "f1_tol_norm_std": 0.151
+        },
+        "numpy-cusum": {
+          "f1_tol_rel_mean": 0.3383,
+          "f1_tol_rel_std": 0.1279,
+          "f1_tol_fixed_mean": 0.2881,
+          "f1_tol_fixed_std": 0.1198,
+          "f1_tol_norm_mean": 0.2881,
+          "f1_tol_norm_std": 0.1198
+        },
+        "numpy-slidingt": {
+          "f1_tol_rel_mean": 0.4415,
+          "f1_tol_rel_std": 0.0609,
+          "f1_tol_fixed_mean": 0.391,
+          "f1_tol_fixed_std": 0.0625,
+          "f1_tol_norm_mean": 0.391,
+          "f1_tol_norm_std": 0.0625
+        },
+        "ruptures-kernel-rbf": {
+          "f1_tol_rel_mean": 0.0714,
+          "f1_tol_rel_std": 0.0412,
+          "f1_tol_fixed_mean": 0.0571,
+          "f1_tol_fixed_std": 0.0467,
+          "f1_tol_norm_mean": 0.0571,
+          "f1_tol_norm_std": 0.0467
+        }
+      },
+      "mean_seg_len": 95.2,
+      "tol_rel": 20,
+      "tol_fixed": 10,
+      "tol_norm": 10,
+      "tol_norm_over_seg": 0.105,
+      "tol_rel_over_seg": 0.21,
+      "tol_fixed_over_seg": 0.105,
+      "macro_tol_rel": 0.4219,
+      "macro_tol_fixed": 0.3883,
+      "macro_tol_norm": 0.3883
+    }
+  }
+}

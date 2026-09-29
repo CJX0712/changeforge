@@ -132,60 +132,62 @@ class MyDetector:
 - **递归导入**：评测/指标模块内不要定义与 sklearn 导入别名同名的函数；如必须导入 sklearn，改名 `as _sk_xxx`
 - **pytest 路径**：`pyproject.toml` 已设 `pythonpath=["."]`，干净环境可直接 `pytest`
 
+
 ## 8. 性能基线（quick 冒烟）
 
-确定性可复现（`make_tier_series` 全走 `np.random.default_rng`，seed 固定）。主指标 F1@tol_rel。
+确定性可复现（`make_tier_series` 全走 `np.random.default_rng`，seed 固定）。
+主指标 F1@tol_rel（口径 A：tol=0.01·n）；口径 C（tol=0.1·n/(K_true+1)，tol/段长恒 0.1）用于跨档可比。
 
-| 档 | 检测器 | F1 | P | R | 时延ms |
-|----|--------|----|----|----|----|
-| D0 Smoke | numpy-pelt-l2 | 1.000 | 1.000 | 1.000 | 24.4 |
-| D0 Smoke | numpy-binseg-l2 | 1.000 | 1.000 | 1.000 | 18.2 |
-| D0 Smoke | numpy-window-l2 | 0.667 | 0.500 | 1.000 | 15.0 |
-| D0 Smoke | numpy-mmd-rff | 1.000 | 1.000 | 1.000 | 372.8 |
-| D0 Smoke | numpy-cusum | 0.417 | 0.267 | 1.000 | 0.9 |
-| D0 Smoke | numpy-slidingt | 0.667 | 0.500 | 1.000 | 24.9 |
-| D0 Smoke | ruptures-pelt-l2 | 1.000 | 1.000 | 1.000 | 3193.0 |
-| D0 Smoke | ruptures-pelt-l1 | 1.000 | 1.000 | 1.000 | 4238.2 |
-| D0 Smoke | ruptures-pelt-normal | 1.000 | 1.000 | 1.000 | 4829.5 |
-| D0 Smoke | ruptures-pelt-rank | 1.000 | 1.000 | 1.000 | 4672.6 |
-| D0 Smoke | ruptures-kernel-rbf | 1.000 | 1.000 | 1.000 | 19.0 |
-| D0 Smoke | constab-cpd ⭐旗舰 | 1.000 | 1.000 | 1.000 | 85351.0 |
-| D3 Medium | numpy-pelt-l2 | 0.333 | 0.500 | 0.250 | 24.8 |
-| D3 Medium | numpy-binseg-l2 | 0.167 | 0.250 | 0.125 | 26.8 |
-| D3 Medium | numpy-window-l2 | 0.000 | 0.000 | 0.000 | 14.2 |
-| D3 Medium | numpy-mmd-rff | 0.000 | 0.000 | 0.000 | 1080.5 |
-| D3 Medium | numpy-cusum | 0.444 | 0.400 | 0.500 | 0.6 |
-| D3 Medium | numpy-slidingt | 0.000 | 0.000 | 0.000 | 19.3 |
-| D3 Medium | ruptures-pelt-l2 | 0.333 | 0.500 | 0.250 | 4012.3 |
-| D3 Medium | ruptures-pelt-l1 | 0.000 | 0.000 | 0.000 | 6688.2 |
-| D3 Medium | ruptures-pelt-normal | 0.333 | 0.500 | 0.250 | 6002.6 |
-| D3 Medium | ruptures-pelt-rank | 0.167 | 0.250 | 0.125 | 5712.8 |
-| D3 Medium | ruptures-kernel-rbf | 0.000 | 0.000 | 0.000 | 26.8 |
-| D3 Medium | constab-cpd ⭐旗舰 | 0.286 | 0.333 | 0.250 | 135521.8 |
-| D4 Hard | numpy-pelt-l2 | 0.261 | 0.200 | 0.375 | 25.2 |
-| D4 Hard | numpy-binseg-l2 | 0.111 | 0.100 | 0.125 | 91.2 |
-| D4 Hard | numpy-window-l2 | 0.353 | 0.333 | 0.375 | 14.7 |
-| D4 Hard | numpy-mmd-rff | 0.000 | 0.000 | 0.000 | 1105.8 |
-| D4 Hard | numpy-cusum | 0.500 | 0.350 | 0.875 | 1.2 |
-| D4 Hard | numpy-slidingt | 0.000 | 0.000 | 0.000 | 22.3 |
-| D4 Hard | ruptures-pelt-l2 | 0.222 | 0.200 | 0.250 | 3236.7 |
-| D4 Hard | ruptures-pelt-l1 | 0.000 | 0.000 | 0.000 | 7305.6 |
-| D4 Hard | ruptures-pelt-normal | 0.222 | 1.000 | 0.125 | 6544.3 |
-| D4 Hard | ruptures-pelt-rank | 0.000 | 0.000 | 0.000 | 8199.1 |
-| D4 Hard | ruptures-kernel-rbf | 0.000 | 0.000 | 0.000 | 19.8 |
-| D4 Hard | constab-cpd ⭐旗舰 | 0.000 | 0.000 | 0.000 | 139270.0 |
-| D5 Expert | numpy-pelt-l2 | 0.762 | 0.727 | 0.800 | 97.2 |
-| D5 Expert | numpy-binseg-l2 | 0.778 | 0.875 | 0.700 | 481.9 |
-| D5 Expert | numpy-window-l2 | 0.718 | 0.737 | 0.700 | 58.4 |
-| D5 Expert | numpy-mmd-rff | 0.095 | 1.000 | 0.050 | 6980.1 |
-| D5 Expert | numpy-cusum | 0.340 | 0.296 | 0.400 | 1.7 |
-| D5 Expert | numpy-slidingt | 0.537 | 0.524 | 0.550 | 59.5 |
-| D5 Expert | ruptures-pelt-l2 | 0.821 | 0.842 | 0.800 | 11450.7 |
-| D5 Expert | ruptures-pelt-l1 | 0.647 | 0.786 | 0.550 | 30502.0 |
-| D5 Expert | ruptures-pelt-normal | 0.429 | 0.750 | 0.300 | 29905.9 |
-| D5 Expert | ruptures-pelt-rank | 0.333 | 1.000 | 0.200 | 29151.3 |
-| D5 Expert | ruptures-kernel-rbf | 0.095 | 1.000 | 0.050 | 73.3 |
-| D5 Expert | constab-cpd ⭐旗舰 | 0.095 | 1.000 | 0.050 | 734778.4 |
+| 档 | 检测器 | F1@A | F1@C | P | R | 时延ms |
+|----|--------|------|------|----|----|----|
+| D0 Smoke | numpy-pelt-l2 | 1.000 | 1.000 | 1.000 | 1.000 | 28.4 |
+| D0 Smoke | numpy-binseg-l2 | 1.000 | 1.000 | 1.000 | 1.000 | 20.1 |
+| D0 Smoke | numpy-window-l2 | 0.667 | 0.667 | 0.500 | 1.000 | 16.1 |
+| D0 Smoke | numpy-mmd-rff | 1.000 | 1.000 | 1.000 | 1.000 | 475.4 |
+| D0 Smoke | numpy-cusum | 0.417 | 0.417 | 0.267 | 1.000 | 0.7 |
+| D0 Smoke | numpy-slidingt | 0.667 | 0.667 | 0.500 | 1.000 | 23.3 |
+| D0 Smoke | ruptures-pelt-l2 | 1.000 | 1.000 | 1.000 | 1.000 | 3427.9 |
+| D0 Smoke | ruptures-pelt-l1 | 1.000 | 1.000 | 1.000 | 1.000 | 4644.7 |
+| D0 Smoke | ruptures-pelt-normal | 1.000 | 1.000 | 1.000 | 1.000 | 5433.8 |
+| D0 Smoke | ruptures-pelt-rank | 1.000 | 1.000 | 1.000 | 1.000 | 5051.1 |
+| D0 Smoke | ruptures-kernel-rbf | 1.000 | 1.000 | 1.000 | 1.000 | 21.6 |
+| D0 Smoke | constab-cpd ⭐旗舰 | 1.000 | 1.000 | 1.000 | 1.000 | 93009.1 |
+| D3 Medium | numpy-pelt-l2 | 0.333 | 0.500 | 0.500 | 0.250 | 21.7 |
+| D3 Medium | numpy-binseg-l2 | 0.167 | 0.333 | 0.250 | 0.125 | 27.0 |
+| D3 Medium | numpy-window-l2 | 0.000 | 0.000 | 0.000 | 0.000 | 13.8 |
+| D3 Medium | numpy-mmd-rff | 0.000 | 0.200 | 0.000 | 0.000 | 1054.8 |
+| D3 Medium | numpy-cusum | 0.444 | 0.556 | 0.400 | 0.500 | 0.7 |
+| D3 Medium | numpy-slidingt | 0.000 | 0.000 | 0.000 | 0.000 | 19.4 |
+| D3 Medium | ruptures-pelt-l2 | 0.333 | 0.500 | 0.500 | 0.250 | 3872.0 |
+| D3 Medium | ruptures-pelt-l1 | 0.000 | 0.200 | 0.000 | 0.000 | 6547.9 |
+| D3 Medium | ruptures-pelt-normal | 0.333 | 0.500 | 0.500 | 0.250 | 5801.3 |
+| D3 Medium | ruptures-pelt-rank | 0.167 | 0.367 | 0.250 | 0.125 | 5807.2 |
+| D3 Medium | ruptures-kernel-rbf | 0.000 | 0.200 | 0.000 | 0.000 | 17.5 |
+| D3 Medium | constab-cpd ⭐旗舰 | 0.286 | 0.486 | 0.333 | 0.250 | 106634.4 |
+| D4 Hard | numpy-pelt-l2 | 0.267 | 0.267 | 0.286 | 0.250 | 26.9 |
+| D4 Hard | numpy-binseg-l2 | 0.167 | 0.167 | 0.250 | 0.125 | 44.6 |
+| D4 Hard | numpy-window-l2 | 0.167 | 0.167 | 0.250 | 0.125 | 15.0 |
+| D4 Hard | numpy-mmd-rff | 0.000 | 0.000 | 0.000 | 0.000 | 1140.0 |
+| D4 Hard | numpy-cusum | 0.500 | 0.500 | 0.375 | 0.750 | 0.8 |
+| D4 Hard | numpy-slidingt | 0.000 | 0.000 | 0.000 | 0.000 | 25.8 |
+| D4 Hard | ruptures-pelt-l2 | 0.182 | 0.182 | 0.333 | 0.125 | 3318.4 |
+| D4 Hard | ruptures-pelt-l1 | 0.222 | 0.222 | 1.000 | 0.125 | 5781.1 |
+| D4 Hard | ruptures-pelt-normal | 0.400 | 0.400 | 1.000 | 0.250 | 6717.0 |
+| D4 Hard | ruptures-pelt-rank | 0.222 | 0.222 | 1.000 | 0.125 | 6715.3 |
+| D4 Hard | ruptures-kernel-rbf | 0.000 | 0.000 | 0.000 | 0.000 | 18.3 |
+| D4 Hard | constab-cpd ⭐旗舰 | 0.000 | 0.000 | 0.000 | 0.000 | 107341.3 |
+| D5 Expert | numpy-pelt-l2 | 0.526 | 0.526 | 0.556 | 0.500 | 65.7 |
+| D5 Expert | numpy-binseg-l2 | 0.625 | 0.625 | 0.833 | 0.500 | 215.1 |
+| D5 Expert | numpy-window-l2 | 0.686 | 0.629 | 0.800 | 0.600 | 28.7 |
+| D5 Expert | numpy-mmd-rff | 0.182 | 0.182 | 1.000 | 0.100 | 3290.9 |
+| D5 Expert | numpy-cusum | 0.407 | 0.407 | 0.324 | 0.550 | 1.4 |
+| D5 Expert | numpy-slidingt | 0.389 | 0.389 | 0.438 | 0.350 | 42.1 |
+| D5 Expert | ruptures-pelt-l2 | 0.606 | 0.606 | 0.769 | 0.500 | 7268.6 |
+| D5 Expert | ruptures-pelt-l1 | 0.261 | 0.261 | 1.000 | 0.150 | 15674.1 |
+| D5 Expert | ruptures-pelt-normal | 0.333 | 0.333 | 1.000 | 0.200 | 16628.0 |
+| D5 Expert | ruptures-pelt-rank | 0.182 | 0.182 | 1.000 | 0.100 | 21941.0 |
+| D5 Expert | ruptures-kernel-rbf | 0.095 | 0.095 | 1.000 | 0.050 | 72.1 |
+| D5 Expert | constab-cpd ⭐旗舰 | 0.095 | 0.095 | 1.000 | 0.050 | 263153.8 |
 
 零假设档 FPR（D1/D1b）控制在 α=0.05 附近；ConStab-CPD 的置换显著性闸门经 I12a 不变量校准
 （conformal p = (1+#{null_max >= score})/(n_perm+1) <= α 才报警，不能用分位数阈值）。

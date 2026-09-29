@@ -60,7 +60,18 @@ QUICK_PER_TIER = {"D0": 2, "D1": 5, "D1b": 5, "D3": 2, "D4": 1, "D5": 1}
 
 
 def _tol(n: int) -> int:
+    """口径 A：容差 = 1% 序列长度（行业常见，但与变点数耦合，跨档不可比）。"""
     return max(1, round(0.01 * n))
+
+
+def _tol_norm(n: int, k_true: int) -> int:
+    """口径 C：容差 = 10% 平均段长（tol/seg 恒为 0.1，跨档可比）。
+
+    口径 A 下 tol/seg = 0.01*K，D5(K=20) 达 0.21 而 D0 仅 0.02，
+    相差 10 倍——密集变点档会被容差"送分"，造成难度倒挂假象。
+    本口径消除该混淆因子（代价：用到了真值 K 的弱先验，仅作评测口径）。
+    """
+    return max(1, round(0.1 * n / (k_true + 1)))
 
 
 def _atomic_write(path: Path, data: dict) -> Path:
@@ -101,6 +112,7 @@ def run(quick: bool = False) -> dict:
         count = per_tier[tier]
         for det_name in MAIN_DETECTORS:
             f1s, prs, rcs, els, flagged, gate_logs = [], [], [], [], 0, []
+            f1s_norm, prs_norm, rcs_norm = [], [], []
             for idx in range(count):
                 ds = make_tier_series(tier, idx)
                 n = ds.n_samples
@@ -121,9 +133,18 @@ def run(quick: bool = False) -> dict:
                     gate_logs.append({"error": f"{type(exc).__name__}: {exc}"})
                     continue
                 rep = evaluate(ds.change_points, cps, n, tolerance=_tol(n))
+                rep_n = evaluate(
+                    ds.change_points,
+                    cps,
+                    n,
+                    tolerance=_tol_norm(n, len(ds.change_points)),
+                )
                 f1s.append(rep.f1)
                 prs.append(rep.precision)
                 rcs.append(rep.recall)
+                f1s_norm.append(rep_n.f1)
+                prs_norm.append(rep_n.precision)
+                rcs_norm.append(rep_n.recall)
                 els.append(elapsed)
                 if cps:
                     flagged += 1
@@ -135,6 +156,9 @@ def run(quick: bool = False) -> dict:
                 "f1_mean": round(float(np.mean(f1s)), 4),
                 "precision_mean": round(float(np.mean(prs)), 4),
                 "recall_mean": round(float(np.mean(rcs)), 4),
+                "f1_mean_norm": round(float(np.mean(f1s_norm)), 4),
+                "precision_mean_norm": round(float(np.mean(prs_norm)), 4),
+                "recall_mean_norm": round(float(np.mean(rcs_norm)), 4),
                 "runtime_ms_mean": round(float(np.mean(els)), 1),
                 "n_series": len(f1s),
             }
@@ -144,7 +168,7 @@ def run(quick: bool = False) -> dict:
                 entry["gate_sample"] = gate_logs[-1]
             results[tier][det_name] = entry
         if not spec.is_null:
-            of1 = []
+            of1, of1_norm = [], []
             for idx in range(min(count, 2)):
                 ds = make_tier_series(tier, idx)
                 n = ds.n_samples
@@ -153,12 +177,20 @@ def run(quick: bool = False) -> dict:
                 det.fit(ds.signal)
                 cps = [int(c) for c in det.predict()]
                 rep = evaluate(ds.change_points, cps, n, tolerance=_tol(n))
+                rep_n = evaluate(
+                    ds.change_points,
+                    cps,
+                    n,
+                    tolerance=_tol_norm(n, len(ds.change_points)),
+                )
                 of1.append(rep.f1)
+                of1_norm.append(rep_n.f1)
             if of1:
                 oracle_ref[tier] = {
                     "detector": ORACLE,
                     "k_given": spec.k,
                     "f1_mean": round(float(np.mean(of1)), 4),
+                    "f1_mean_norm": round(float(np.mean(of1_norm)), 4),
                     "note": "oracle-K 上界参考，非公平对比，禁止进主表",
                 }
         done_tiers.add(tier)
@@ -204,7 +236,10 @@ def run(quick: bool = False) -> dict:
         "author": "晨星",
         "version": changeforge.__version__,
         "mode": "quick" if quick else "full",
-        "tolerance_rule": "F1@tol_rel, tol_rel = 0.01*n",
+        "tolerance_rule": (
+            "口径A: tol=0.01*n（行业常见，但与 K 耦合）; "
+            "口径C: tol=0.1*n/(K_true+1)（tol/段长恒 0.1，跨档可比）"
+        ),
         "penalty_rule": "beta=lam*d*sigma_hat^2*log n; sigma_hat=MAD*1.4826; lam=3(BIC-like)",
         "oracle": oracle_ref,
         "results": results,

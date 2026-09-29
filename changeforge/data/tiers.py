@@ -113,13 +113,14 @@ TIER_SPECS: dict[str, TierSpec] = {
         outlier_frac=0.0,
         n_decoys=0,
         change_types=("mean",),
-        note="主战场：best_single 预期落 [0.55, 0.90]",
+        note="主战场：纯均值变化（l2 类代价唯一能稳定看见的类型）；"
+        "混合类型档 D4/D5 的 F1 天然被方差/AR 边界稀释，跨档不可直接比",
     ),
     "D4": TierSpec(
         tier="D4",
         n=1000,
         k=8,
-        d_target=0.8,
+        d_target=1.0,
         noise="normal",
         ar_rho=0.0,
         outlier_frac=0.02,
@@ -131,7 +132,7 @@ TIER_SPECS: dict[str, TierSpec] = {
         tier="D5",
         n=2000,
         k=20,
-        d_target=0.4,
+        d_target=0.5,
         noise="t3",
         ar_rho=0.6,
         outlier_frac=0.03,
@@ -145,9 +146,30 @@ TIER_ORDER = ("D0", "D1", "D1b", "D3", "D4", "D5")
 
 
 def detectability_delta(n: int, m_min: int, d_target: float) -> float:
-    """由可检测性指数反解 Delta_mu / sigma（公式见模块 docstring）。"""
+    """由可检测性指数反解 Delta_mu / sigma（公式见模块 docstring）。
+
+    注意：本函数按**单一 m_min** 标定，仅适用于段长均匀的档位（如 D3）。
+    段长不均匀的档位（D4/D5）必须改用 :func:`detectability_delta_pair`，
+    按相邻两段的实际长度对逐边界反解——否则长段会被过度加强，
+    造成"名义 D_target 很小、实际极易检测"的难度倒挂。
+    """
     extreme = float(np.sqrt(2.0 * np.log(n / m_min)))
     return float((d_target + extreme) * np.sqrt(1.0 / m_min + 1.0 / m_min))
+
+
+def detectability_delta_pair(n: int, m1: int, m2: int, d_target: float) -> float:
+    """按相邻两段的实际长度对反解 Delta_mu / sigma。
+
+        kappa = |Delta_mu| / (sigma * sqrt(1/m1 + 1/m2))
+        D     = kappa - sqrt(2 * log(n / min(m1, m2)))
+        => Delta_mu/sigma = (D_target + sqrt(2*log(n/min(m1,m2)))) * sqrt(1/m1 + 1/m2)
+
+    段长不均匀时（D4/D5 随机段长）必须用这个版本，每个边界才都能精确
+    落在目标可检测性上，难度才随 D_target 单调。
+    """
+    m_lo = max(1, min(m1, m2))
+    extreme = float(np.sqrt(2.0 * np.log(max(2.0, n / m_lo))))
+    return float((d_target + extreme) * np.sqrt(1.0 / m1 + 1.0 / m2))
 
 
 def _noise(kind: str, rng: np.random.Generator, size: int) -> np.ndarray:
@@ -222,11 +244,15 @@ def make_tier_series(tier: str, idx: int) -> Dataset:
         if j > 0:
             ctype = spec.change_types[(j - 1) % len(spec.change_types)]
             if ctype == "mean":
-                state_mu += detectability_delta(n, m_min_eff, spec.d_target) * state_sd
+                m_prev = segments[j - 1][1] - segments[j - 1][0]
+                m_cur = e - s
+                state_mu += detectability_delta_pair(n, m_prev, m_cur, spec.d_target) * state_sd
             elif ctype == "var":
-                state_sd *= 1.6
+                # 交替而非累积：连乘会让 sd 随 K 指数放大（K=20 时达 10.5σ），
+                # 造成"变点越多反而越好检"的难度倒挂。
+                state_sd = 1.35 if state_sd < 1.2 else 1.0
             elif ctype == "ar":
-                state_rho = 0.55 if state_rho < 0.3 else 0.2
+                state_rho = 0.40 if state_rho < 0.25 else 0.15
             elif ctype == "dist":
                 state_dist = "gamma" if state_dist == "normal" else "normal"
         m = e - s

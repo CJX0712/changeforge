@@ -69,6 +69,11 @@ def fpr_color(v: float) -> str:
     return "background:rgb(220,38,38);color:#ffffff"
 
 
+def _or(v: float | None) -> str:
+    """oracle 口径 C 缺省兼容（旧 benchmark.json 无该字段）。"""
+    return fmt(v) if v is not None else "—"
+
+
 def fmt(v: float, nd: int = 3) -> str:
     return f"{float(v):.{nd}f}"
 
@@ -109,22 +114,27 @@ def build_html(bench: dict) -> str:
     tol_rule = bench.get("tolerance_rule", "")
     pen_rule = bench.get("penalty_rule", "")
 
-    # ---------- 1) F1 热力表 ----------
-    f1_rows = []
-    for det in DETECTORS:
-        cells = []
-        for tier in TIERS:
-            e = res.get(tier, {}).get(det)
-            if e is None:
-                cells.append('<td class="na">—</td>')
-            else:
-                v = e["f1_mean"]
-                style = heat_color(v)
-                mark = " ★" if det == "constab-cpd" else ""
-                cells.append(f'<td style="{style}">{fmt(v)}{mark}</td>')
-        name = det.replace("-", "‑")
-        cls = "flagship" if det == "constab-cpd" else ""
-        f1_rows.append(f'<tr class="{cls}"><th scope="row">{name}</th>{"".join(cells)}</tr>')
+    # ---------- 1) F1 热力表（两种容差口径共用一份生成逻辑） ----------
+    def f1_table(key: str) -> list[str]:
+        rows = []
+        for det in DETECTORS:
+            cells = []
+            for tier in TIERS:
+                e = res.get(tier, {}).get(det)
+                v = e.get(key) if e else None
+                if v is None:
+                    cells.append('<td class="na">—</td>')
+                else:
+                    style = heat_color(v)
+                    mark = " ★" if det == "constab-cpd" else ""
+                    cells.append(f'<td style="{style}">{fmt(v)}{mark}</td>')
+            name = det.replace("-", "‑")
+            cls = "flagship" if det == "constab-cpd" else ""
+            rows.append(f'<tr class="{cls}"><th scope="row">{name}</th>{"".join(cells)}</tr>')
+        return rows
+
+    f1_rows = f1_table("f1_mean")
+    f1_norm_rows = f1_table("f1_mean_norm")
 
     # ---------- 2) Null 档 FPR ----------
     fpr_rows = []
@@ -196,7 +206,8 @@ def build_html(bench: dict) -> str:
         orc_rows.append(
             f'<tr><th scope="row">{TIER_LABEL[tier]}</th>'
             f'<td class="num">{o.get("k_given")}</td>'
-            f'<td class="num">{fmt(o.get("f1_mean", 0.0))}</td></tr>'
+            f'<td class="num">{fmt(o.get("f1_mean", 0.0))}</td>'
+            f'<td class="num">{_or(o.get("f1_mean_norm"))}</td></tr>'
         )
 
     tier_heads = "".join(f"<th>{TIER_LABEL[t]}</th>" for t in TIERS)
@@ -290,6 +301,20 @@ def build_html(bench: dict) -> str:
   → <span class="sw" style="background:rgb(15,110,92)"></span>1.0
 </div>
 
+<h2>1C · 同一张表，改用归一化容差 tol = 0.1 × 平均段长</h2>
+<div class="note">
+  口径 A 隐含 <code>tol/段长 = 0.01·K</code>：D5(K=20) 达 0.21，D0 仅 0.02——
+  密集变点档会被容差"送分"，跨档比 F1 不公平。口径 C 令
+  <code>tol/段长</code> 恒为 0.1。该口径用到真值 K 的弱先验（非位置信息），
+  仅作评测参考。完整机理见 <code>docs/difficulty_analysis.md</code>。
+</div>
+<table>
+  <thead><tr><th>检测器</th>{tier_heads}</tr></thead>
+  <tbody>
+{NL.join(f1_norm_rows)}
+  </tbody>
+</table>
+
 <h2>2 · 零假设档误报率 FPR（越低越好）</h2>
 <div class="note">
   D1 = iid 高斯噪声；D1b = AR(1) 自相关噪声。α = 0.05。
@@ -329,7 +354,7 @@ def build_html(bench: dict) -> str:
 
 <h2>5 · Oracle-K 参考（禁止进入主表对比）</h2>
 <table>
-  <thead><tr><th>档位</th><th>给定 K</th><th>F1</th></tr></thead>
+  <thead><tr><th>档位</th><th>给定 K</th><th>F1@口径A</th><th>F1@口径C</th></tr></thead>
   <tbody>
 {NL.join(orc_rows)}
   </tbody>
