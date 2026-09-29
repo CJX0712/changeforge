@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# 测试与覆盖率
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+
+# 产物
+artifacts/
+outputs/
+*.log
+
+# 数据
+data/raw/
+*.npy
+!examples/**/*.npy
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

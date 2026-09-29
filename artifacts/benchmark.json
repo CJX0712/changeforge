@@ -1,0 +1,735 @@
+{
+  "generated_at": "2026-09-29T18:41:20.121445+00:00",
+  "author": "晨星",
+  "version": "0.1.0",
+  "mode": "quick",
+  "tolerance_rule": "F1@tol_rel, tol_rel = 0.01*n",
+  "penalty_rule": "beta=lam*d*sigma_hat^2*log n; sigma_hat=MAD*1.4826; lam=3(BIC-like)",
+  "oracle": {
+    "D0": {
+      "detector": "ruptures-dynp-l2",
+      "k_given": 1,
+      "f1_mean": 1.0,
+      "note": "oracle-K 上界参考，非公平对比，禁止进主表"
+    },
+    "D3": {
+      "detector": "ruptures-dynp-l2",
+      "k_given": 4,
+      "f1_mean": 0.375,
+      "note": "oracle-K 上界参考，非公平对比，禁止进主表"
+    },
+    "D4": {
+      "detector": "ruptures-dynp-l2",
+      "k_given": 8,
+      "f1_mean": 0.125,
+      "note": "oracle-K 上界参考，非公平对比，禁止进主表"
+    },
+    "D5": {
+      "detector": "ruptures-dynp-l2",
+      "k_given": 20,
+      "f1_mean": 0.8,
+      "note": "oracle-K 上界参考，非公平对比，禁止进主表"
+    }
+  },
+  "results": {
+    "D0": {
+      "numpy-pelt-l2": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 24.4,
+        "n_series": 2
+      },
+      "numpy-binseg-l2": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 18.2,
+        "n_series": 2
+      },
+      "numpy-window-l2": {
+        "f1_mean": 0.6667,
+        "precision_mean": 0.5,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 15.0,
+        "n_series": 2
+      },
+      "numpy-mmd-rff": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 372.8,
+        "n_series": 2
+      },
+      "numpy-cusum": {
+        "f1_mean": 0.4167,
+        "precision_mean": 0.2667,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 0.9,
+        "n_series": 2
+      },
+      "numpy-slidingt": {
+        "f1_mean": 0.6667,
+        "precision_mean": 0.5,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 24.9,
+        "n_series": 2
+      },
+      "ruptures-pelt-l2": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 3193.0,
+        "n_series": 2
+      },
+      "ruptures-pelt-l1": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 4238.2,
+        "n_series": 2
+      },
+      "ruptures-pelt-normal": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 4829.5,
+        "n_series": 2
+      },
+      "ruptures-pelt-rank": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 4672.6,
+        "n_series": 2
+      },
+      "ruptures-kernel-rbf": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 19.0,
+        "n_series": 2
+      },
+      "constab-cpd": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 85351.0,
+        "n_series": 2,
+        "gate_sample": {
+          "threshold": 0.81,
+          "n_views": 10,
+          "n_perm": 19,
+          "block_len": 50,
+          "alpha": 0.05,
+          "p_values": [
+            0.05
+          ],
+          "scores": [
+            1.0
+          ],
+          "backend": "numpy-vectorized-pelt"
+        }
+      }
+    },
+    "D1": {
+      "numpy-pelt-l2": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 25.4,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "numpy-binseg-l2": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 9.4,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "numpy-window-l2": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 14.9,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "numpy-mmd-rff": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 1690.5,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "numpy-cusum": {
+        "f1_mean": 0.2,
+        "precision_mean": 0.2,
+        "recall_mean": 0.2,
+        "runtime_ms_mean": 0.8,
+        "n_series": 5,
+        "fpr_per_series": 0.8
+      },
+      "numpy-slidingt": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 20.6,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "ruptures-pelt-l2": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 6349.6,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "ruptures-pelt-l1": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 5840.9,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "ruptures-pelt-normal": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 8589.6,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "ruptures-pelt-rank": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 8252.4,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "ruptures-kernel-rbf": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 21.4,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "constab-cpd": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 122908.1,
+        "n_series": 5,
+        "fpr_per_series": 0.0,
+        "gate_sample": {
+          "threshold": 0.09,
+          "n_views": 10,
+          "n_perm": 19,
+          "block_len": 1,
+          "alpha": 0.05,
+          "p_values": [],
+          "scores": [],
+          "backend": "numpy-vectorized-pelt"
+        }
+      }
+    },
+    "D1b": {
+      "numpy-pelt-l2": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 33.4,
+        "n_series": 5,
+        "fpr_per_series": 1.0
+      },
+      "numpy-binseg-l2": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 34.5,
+        "n_series": 5,
+        "fpr_per_series": 1.0
+      },
+      "numpy-window-l2": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 14.0,
+        "n_series": 5,
+        "fpr_per_series": 1.0
+      },
+      "numpy-mmd-rff": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 1224.9,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "numpy-cusum": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 0.7,
+        "n_series": 5,
+        "fpr_per_series": 1.0
+      },
+      "numpy-slidingt": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 18.8,
+        "n_series": 5,
+        "fpr_per_series": 1.0
+      },
+      "ruptures-pelt-l2": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 2070.4,
+        "n_series": 5,
+        "fpr_per_series": 1.0
+      },
+      "ruptures-pelt-l1": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 7493.3,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "ruptures-pelt-normal": {
+        "f1_mean": 0.8,
+        "precision_mean": 0.8,
+        "recall_mean": 0.8,
+        "runtime_ms_mean": 7067.7,
+        "n_series": 5,
+        "fpr_per_series": 0.2
+      },
+      "ruptures-pelt-rank": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 8135.6,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "ruptures-kernel-rbf": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 21.2,
+        "n_series": 5,
+        "fpr_per_series": 0.0
+      },
+      "constab-cpd": {
+        "f1_mean": 1.0,
+        "precision_mean": 1.0,
+        "recall_mean": 1.0,
+        "runtime_ms_mean": 122541.2,
+        "n_series": 5,
+        "fpr_per_series": 0.0,
+        "gate_sample": {
+          "threshold": 0.25,
+          "n_views": 10,
+          "n_perm": 19,
+          "block_len": 5,
+          "alpha": 0.05,
+          "p_values": [],
+          "scores": [],
+          "backend": "numpy-vectorized-pelt"
+        }
+      }
+    },
+    "D3": {
+      "numpy-pelt-l2": {
+        "f1_mean": 0.3333,
+        "precision_mean": 0.5,
+        "recall_mean": 0.25,
+        "runtime_ms_mean": 24.8,
+        "n_series": 2
+      },
+      "numpy-binseg-l2": {
+        "f1_mean": 0.1667,
+        "precision_mean": 0.25,
+        "recall_mean": 0.125,
+        "runtime_ms_mean": 26.8,
+        "n_series": 2
+      },
+      "numpy-window-l2": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 14.2,
+        "n_series": 2
+      },
+      "numpy-mmd-rff": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 1080.5,
+        "n_series": 2
+      },
+      "numpy-cusum": {
+        "f1_mean": 0.4444,
+        "precision_mean": 0.4,
+        "recall_mean": 0.5,
+        "runtime_ms_mean": 0.6,
+        "n_series": 2
+      },
+      "numpy-slidingt": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 19.3,
+        "n_series": 2
+      },
+      "ruptures-pelt-l2": {
+        "f1_mean": 0.3333,
+        "precision_mean": 0.5,
+        "recall_mean": 0.25,
+        "runtime_ms_mean": 4012.3,
+        "n_series": 2
+      },
+      "ruptures-pelt-l1": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 6688.2,
+        "n_series": 2
+      },
+      "ruptures-pelt-normal": {
+        "f1_mean": 0.3333,
+        "precision_mean": 0.5,
+        "recall_mean": 0.25,
+        "runtime_ms_mean": 6002.6,
+        "n_series": 2
+      },
+      "ruptures-pelt-rank": {
+        "f1_mean": 0.1667,
+        "precision_mean": 0.25,
+        "recall_mean": 0.125,
+        "runtime_ms_mean": 5712.8,
+        "n_series": 2
+      },
+      "ruptures-kernel-rbf": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 26.8,
+        "n_series": 2
+      },
+      "constab-cpd": {
+        "f1_mean": 0.2857,
+        "precision_mean": 0.3333,
+        "recall_mean": 0.25,
+        "runtime_ms_mean": 135521.8,
+        "n_series": 2,
+        "gate_sample": {
+          "threshold": 0.09,
+          "n_views": 10,
+          "n_perm": 19,
+          "block_len": 3,
+          "alpha": 0.05,
+          "p_values": [
+            0.05
+          ],
+          "scores": [
+            0.48999999999999994
+          ],
+          "backend": "numpy-vectorized-pelt"
+        }
+      }
+    },
+    "D4": {
+      "numpy-pelt-l2": {
+        "f1_mean": 0.2609,
+        "precision_mean": 0.2,
+        "recall_mean": 0.375,
+        "runtime_ms_mean": 25.2,
+        "n_series": 1
+      },
+      "numpy-binseg-l2": {
+        "f1_mean": 0.1111,
+        "precision_mean": 0.1,
+        "recall_mean": 0.125,
+        "runtime_ms_mean": 91.2,
+        "n_series": 1
+      },
+      "numpy-window-l2": {
+        "f1_mean": 0.3529,
+        "precision_mean": 0.3333,
+        "recall_mean": 0.375,
+        "runtime_ms_mean": 14.7,
+        "n_series": 1
+      },
+      "numpy-mmd-rff": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 1105.8,
+        "n_series": 1
+      },
+      "numpy-cusum": {
+        "f1_mean": 0.5,
+        "precision_mean": 0.35,
+        "recall_mean": 0.875,
+        "runtime_ms_mean": 1.2,
+        "n_series": 1
+      },
+      "numpy-slidingt": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 22.3,
+        "n_series": 1
+      },
+      "ruptures-pelt-l2": {
+        "f1_mean": 0.2222,
+        "precision_mean": 0.2,
+        "recall_mean": 0.25,
+        "runtime_ms_mean": 3236.7,
+        "n_series": 1
+      },
+      "ruptures-pelt-l1": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 7305.6,
+        "n_series": 1
+      },
+      "ruptures-pelt-normal": {
+        "f1_mean": 0.2222,
+        "precision_mean": 1.0,
+        "recall_mean": 0.125,
+        "runtime_ms_mean": 6544.3,
+        "n_series": 1
+      },
+      "ruptures-pelt-rank": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 8199.1,
+        "n_series": 1
+      },
+      "ruptures-kernel-rbf": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 19.8,
+        "n_series": 1
+      },
+      "constab-cpd": {
+        "f1_mean": 0.0,
+        "precision_mean": 0.0,
+        "recall_mean": 0.0,
+        "runtime_ms_mean": 139270.0,
+        "n_series": 1,
+        "gate_sample": {
+          "threshold": 0.25,
+          "n_views": 10,
+          "n_perm": 19,
+          "block_len": 2,
+          "alpha": 0.05,
+          "p_values": [],
+          "scores": [],
+          "backend": "numpy-vectorized-pelt"
+        }
+      }
+    },
+    "D5": {
+      "numpy-pelt-l2": {
+        "f1_mean": 0.7619,
+        "precision_mean": 0.7273,
+        "recall_mean": 0.8,
+        "runtime_ms_mean": 97.2,
+        "n_series": 1
+      },
+      "numpy-binseg-l2": {
+        "f1_mean": 0.7778,
+        "precision_mean": 0.875,
+        "recall_mean": 0.7,
+        "runtime_ms_mean": 481.9,
+        "n_series": 1
+      },
+      "numpy-window-l2": {
+        "f1_mean": 0.7179,
+        "precision_mean": 0.7368,
+        "recall_mean": 0.7,
+        "runtime_ms_mean": 58.4,
+        "n_series": 1
+      },
+      "numpy-mmd-rff": {
+        "f1_mean": 0.0952,
+        "precision_mean": 1.0,
+        "recall_mean": 0.05,
+        "runtime_ms_mean": 6980.1,
+        "n_series": 1
+      },
+      "numpy-cusum": {
+        "f1_mean": 0.3404,
+        "precision_mean": 0.2963,
+        "recall_mean": 0.4,
+        "runtime_ms_mean": 1.7,
+        "n_series": 1
+      },
+      "numpy-slidingt": {
+        "f1_mean": 0.5366,
+        "precision_mean": 0.5238,
+        "recall_mean": 0.55,
+        "runtime_ms_mean": 59.5,
+        "n_series": 1
+      },
+      "ruptures-pelt-l2": {
+        "f1_mean": 0.8205,
+        "precision_mean": 0.8421,
+        "recall_mean": 0.8,
+        "runtime_ms_mean": 11450.7,
+        "n_series": 1
+      },
+      "ruptures-pelt-l1": {
+        "f1_mean": 0.6471,
+        "precision_mean": 0.7857,
+        "recall_mean": 0.55,
+        "runtime_ms_mean": 30502.0,
+        "n_series": 1
+      },
+      "ruptures-pelt-normal": {
+        "f1_mean": 0.4286,
+        "precision_mean": 0.75,
+        "recall_mean": 0.3,
+        "runtime_ms_mean": 29905.9,
+        "n_series": 1
+      },
+      "ruptures-pelt-rank": {
+        "f1_mean": 0.3333,
+        "precision_mean": 1.0,
+        "recall_mean": 0.2,
+        "runtime_ms_mean": 29151.3,
+        "n_series": 1
+      },
+      "ruptures-kernel-rbf": {
+        "f1_mean": 0.0952,
+        "precision_mean": 1.0,
+        "recall_mean": 0.05,
+        "runtime_ms_mean": 73.3,
+        "n_series": 1
+      },
+      "constab-cpd": {
+        "f1_mean": 0.0952,
+        "precision_mean": 1.0,
+        "recall_mean": 0.05,
+        "runtime_ms_mean": 734778.4,
+        "n_series": 1,
+        "gate_sample": {
+          "threshold": 0.48999999999999994,
+          "n_views": 10,
+          "n_perm": 19,
+          "block_len": 12,
+          "alpha": 0.05,
+          "p_values": [
+            0.05
+          ],
+          "scores": [
+            0.9500000000000002
+          ],
+          "backend": "numpy-vectorized-pelt"
+        }
+      }
+    }
+  },
+  "dgp_calibration": {
+    "D0": {
+      "tier": "D0",
+      "n_series": 2,
+      "checks": {
+        "best_single": 1.0,
+        "spread": 0.5833,
+        "smoke_min_f1": 0.4167,
+        "fused_gain_vs_best_single": 0.0,
+        "gate_b_fallback": false
+      }
+    },
+    "D1": {
+      "tier": "D1",
+      "n_series": 5,
+      "checks": {
+        "null_fpr": {
+          "numpy-pelt-l2": 0.0,
+          "numpy-binseg-l2": 0.0,
+          "numpy-window-l2": 0.0,
+          "numpy-mmd-rff": 0.0,
+          "numpy-cusum": 0.8,
+          "numpy-slidingt": 0.0,
+          "ruptures-pelt-l2": 0.0,
+          "ruptures-pelt-l1": 0.0,
+          "ruptures-pelt-normal": 0.0,
+          "ruptures-pelt-rank": 0.0,
+          "ruptures-kernel-rbf": 0.0,
+          "constab-cpd": 0.0
+        },
+        "fused_gain_vs_best_single": 0.0,
+        "gate_b_fallback": false
+      }
+    },
+    "D1b": {
+      "tier": "D1b",
+      "n_series": 5,
+      "checks": {
+        "null_fpr": {
+          "numpy-pelt-l2": 1.0,
+          "numpy-binseg-l2": 1.0,
+          "numpy-window-l2": 1.0,
+          "numpy-mmd-rff": 0.0,
+          "numpy-cusum": 1.0,
+          "numpy-slidingt": 1.0,
+          "ruptures-pelt-l2": 1.0,
+          "ruptures-pelt-l1": 0.0,
+          "ruptures-pelt-normal": 0.2,
+          "ruptures-pelt-rank": 0.0,
+          "ruptures-kernel-rbf": 0.0,
+          "constab-cpd": 0.0
+        },
+        "fused_gain_vs_best_single": 0.0,
+        "gate_b_fallback": false
+      }
+    },
+    "D3": {
+      "tier": "D3",
+      "n_series": 2,
+      "checks": {
+        "best_single": 0.4444,
+        "spread": 0.4444,
+        "fused_gain_vs_best_single": -0.1587,
+        "gate_b_fallback": true
+      }
+    },
+    "D4": {
+      "tier": "D4",
+      "n_series": 1,
+      "checks": {
+        "best_single": 0.5,
+        "spread": 0.5,
+        "fused_gain_vs_best_single": -0.5,
+        "gate_b_fallback": true
+      }
+    },
+    "D5": {
+      "tier": "D5",
+      "n_series": 1,
+      "checks": {
+        "best_single": 0.8205,
+        "spread": 0.7253,
+        "fused_gain_vs_best_single": -0.7253,
+        "gate_b_fallback": true
+      }
+    }
+  }
+}

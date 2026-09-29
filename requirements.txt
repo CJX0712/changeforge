@@ -1,0 +1,12 @@
+# ChangeForge —— 运行 + 测试关键依赖（pinned）
+# 已在 Python 3.13.14 / Windows x64 实测可安装、可运行
+# 作者: 晨星
+
+numpy==2.5.3
+scipy==1.18.1
+scikit-learn==1.9.1
+ruptures==1.1.10
+optuna==5.0.0
+PyYAML==6.0.3
+pytest==9.1.1
+ruff==0.16.9

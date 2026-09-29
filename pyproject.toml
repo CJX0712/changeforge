@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "changeforge"
+version = "0.1.0"
+description = "ChangeForge —— 变化点检测（Changepoint Detection）工程框架"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "晨星" }]
+keywords = ["changepoint-detection", "time-series", "optuna", "benchmark"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy>=2.1",
+    "scipy>=1.14",
+    "scikit-learn>=1.5",
+    "ruptures>=1.1.9",
+    "optuna>=4.0",
+]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.6", "pytest>=8.0"]
+
+[project.scripts]
+changeforge = "changeforge.cli:main"
+
+[tool.setuptools]
+packages = [
+    "changeforge",
+    "changeforge.core",
+    "changeforge.data",
+    "changeforge.detectors",
+    "changeforge.eval",
+    "changeforge.hpo",
+    "changeforge.pipeline",
+    "changeforge.ensemble",
+]
+
+[tool.pytest.ini_options]
+# 关键：干净环境下 pytest 需要把仓库根加入 sys.path，否则 import changeforge 失败
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["slow: 耗时较长的统计校验类测试"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 96
+target-version = "py311"
+extend-exclude = [".venv", "artifacts", "build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E731"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
